@@ -13,9 +13,9 @@ public class bTree {
 	// Instance variables
 
 	private bNode root = null;
-	private boolean running = true;
-	private double lastSize = 0;
-	private double xPos = 0, yPos = 0;
+	private static boolean running = true;
+	private static double lastSize = 0;
+	private static double xPos = 0, yPos = 0;
 
 	/**
 	 * addNode method - adds a new node by descending to the leaf node using a while
@@ -108,25 +108,30 @@ public class bTree {
 	}
 
 	public void stackBalls(bSim link) {
+		traverse_inorder_stack(root, link);
+	}
 
+	private void traverse_inorder_stack(bNode root, bSim link) {
 		if (root.left != null)
-			traverse_inorder_isRunning(root.left);
+			traverse_inorder_stack(root.left, link);
 
 		if (root.iBall.getBSize() - lastSize > DELTASIZE) {
-			
+
 			xPos += gUtil.meterToPixels(link.getScale(), lastSize * 2);
 			root.iBall.moveTo(xPos, link.getHeight() - gUtil.meterToPixels(link.getScale(), root.iBall.getBSize() * 2));
 			yPos = gUtil.meterToPixels(link.getScale(), root.iBall.getBSize() * 2);
-			
+
 		} else {
-			
+
 			yPos += gUtil.meterToPixels(link.getScale(), link.getHeight() - root.iBall.getBSize() * 2);
 			root.iBall.moveTo(xPos, yPos);
-			
+
 		}
 
+		lastSize = root.iBall.getBSize();
+
 		if (root.right != null)
-			traverse_inorder_isRunning(root.right);
+			traverse_inorder_stack(root.right, link);
 	}
 
 	/**
