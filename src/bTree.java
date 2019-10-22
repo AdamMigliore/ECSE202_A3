@@ -13,9 +13,9 @@ public class bTree {
 	// Instance variables
 
 	private bNode root = null;
-	private static boolean running = true;
-	private static double lastSize = 0;
-	private static double xPos = 0, yPos = 0;
+	private boolean running = true;
+	private double lastSize = 0;
+	private double xPos = 0, yPos = 0;
 
 	/**
 	 * addNode method - adds a new node by descending to the leaf node using a while
@@ -118,12 +118,12 @@ public class bTree {
 		if (root.iBall.getBSize() - lastSize > DELTASIZE) {
 
 			xPos += gUtil.meterToPixels(link.getScale(), lastSize * 2);
-			root.iBall.moveTo(xPos, link.getHeight() - gUtil.meterToPixels(link.getScale(), root.iBall.getBSize() * 2));
-			yPos = gUtil.meterToPixels(link.getScale(), root.iBall.getBSize() * 2);
+			yPos = link.getHeight() - gUtil.meterToPixels(link.getScale(), root.iBall.getBSize() * 2);
+			root.iBall.moveTo(xPos, yPos);
 
 		} else {
 
-			yPos += gUtil.meterToPixels(link.getScale(), link.getHeight() - root.iBall.getBSize() * 2);
+			yPos -= gUtil.meterToPixels(link.getScale(), root.iBall.getBSize() * 2);
 			root.iBall.moveTo(xPos, yPos);
 
 		}
