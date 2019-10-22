@@ -4,7 +4,12 @@ import acm.graphics.GOval;
 
 /**
  * @author adamd
- * Assignment 2 for McGill Fall19 ECSE202 class
+ * Assignment 3 for McGill Fall19 ECSE202 class
+ */
+
+/**
+ * @author Adam
+ *
  */
 public class aBall extends Thread {
 
@@ -40,7 +45,7 @@ public class aBall extends Thread {
 			KEy = 1;//kinetic energy in Y
 	
 	private double time;//time in s
-	private boolean canLoop = true;//continue simulation if true; stop simulation if false
+	private boolean isRunning = true;//continue simulation if true; stop simulation if false
 	private final double TICK = 0.1;//delta t 
 	private int ScrX, //screen coordinates in X
 	ScrY;//screen coordinates in Y
@@ -124,7 +129,7 @@ public class aBall extends Thread {
 		myBall.setLocation(ScrX, ScrY);//set the ball location
 
 		if (KEx < ETHR && KEy < ETHR) {//if energy is under a threshold the simulation stops
-			canLoop = !canLoop;
+			isRunning = !isRunning;
 		}
 	}
 
@@ -132,7 +137,7 @@ public class aBall extends Thread {
 	 * the simulation loop which continues until canLoop is false
 	 */
 	public void run() {
-		while (canLoop) {
+		while (isRunning) {
 			calculateVariables();
 			time += TICK;
 			try { // pause for 50 milliseconds
@@ -149,5 +154,29 @@ public class aBall extends Thread {
 	 */
 	public GOval getBall() {
 		return myBall;
+	}
+	
+	
+	/**
+	 * @return isRunning : the predicate to know if the ball is still in motion
+	 */
+	public boolean isRunning() {
+		return isRunning;
+	}
+	
+	/**
+	 * @return bSize : the size of the ball
+	 */
+	public double getBSize() {
+		return bSize;
+	}
+	
+	
+	/**
+	 * @param double x : x position in pixels 
+	 * @param double y : y position in pixels
+	 */
+	public void moveTo(double x, double y) {
+		myBall.setLocation(x,y);
 	}
 }
