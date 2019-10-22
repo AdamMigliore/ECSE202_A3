@@ -18,7 +18,7 @@ public class bSim extends GraphicsProgram {
 	private static final int HEIGHT = 600; // Height of window
 	private static final int OFFSET = 200; // offset for plane
 	private static final double SCALE = HEIGHT / 100; // pixels per meter
-	private static final int NUMBALLS = 60; // # balls to simulate
+	private static final int NUMBALLS = 10; // # balls to simulate
 	private static final double MINSIZE = 1.0; // Minumum ball radius (meters)
 	private static final double MAXSIZE = 7.0; // Maximum ball radius (meters)
 	private static final double EMIN = 0.2; // Minimum loss coefficient
