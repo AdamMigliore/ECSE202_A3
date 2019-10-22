@@ -1,6 +1,8 @@
 
 import java.awt.Color;
+import java.awt.event.MouseEvent;
 
+import acm.graphics.GLabel;
 import acm.graphics.GOval;
 import acm.graphics.GRect;
 import acm.program.GraphicsProgram;
@@ -8,7 +10,7 @@ import acm.util.RandomGenerator;
 
 /**
  * @author adamd
- * Assignment 2 for McGill Fall19 ECSE202 class
+ * Assignment 3 for McGill Fall19 ECSE202 class
  */
 public class bSim extends GraphicsProgram {
 
@@ -16,10 +18,10 @@ public class bSim extends GraphicsProgram {
 	private static final int HEIGHT = 600; // Height of window
 	private static final int OFFSET = 200; // offset for plane
 	private static final double SCALE = HEIGHT / 100; // pixels per meter
-	private static final int NUMBALLS = 100; // # balls to simulate
+	private static final int NUMBALLS = 60; // # balls to simulate
 	private static final double MINSIZE = 1.0; // Minumum ball radius (meters)
-	private static final double MAXSIZE = 10.0; // Maximum ball radius (meters)
-	private static final double EMIN = 0.1; // Minimum loss coefficient
+	private static final double MAXSIZE = 7.0; // Maximum ball radius (meters)
+	private static final double EMIN = 0.2; // Minimum loss coefficient
 	private static final double EMAX = 0.6; // Maximum loss coefficient
 	private static final double VoMIN = 40.0; // Minimum velocity (meters/sec)
 	private static final double VoMAX = 50.0; // Maximum velocity (meters/sec)
@@ -27,13 +29,14 @@ public class bSim extends GraphicsProgram {
 	private static final double ThetaMAX = 100.0; // Maximum launch angle (degrees)
 	private static final int GP_HEIGHT = 3; // Maximum launch angle (degrees)
 	private RandomGenerator rgen = new RandomGenerator(); //randomGenerator 
-
+	private bTree myTree = new bTree();
+	private GLabel message;
 	/**
 	 * the main loop of the simulation which will generate the random parameters for the number of balls in the simulation
 	 */
 	public void run() {
 		
-		rgen.setSeed((long) 0.12345);//required from prof. to match simulation parameters
+		rgen.setSeed((long) 424242);//required from prof. to match simulation parameters
 		
 		setupDisplay();
 		
@@ -48,9 +51,19 @@ public class bSim extends GraphicsProgram {
 			aBall ball = new aBall(gUtil.pixelsToMeter(SCALE, WIDTH / 2), bSize, Vo, theta, bSize, bColor, bLoss, SCALE,
 					WIDTH, HEIGHT);//Generate a new aBall object with it's initial parameters
 			add(ball.getBall());//add the ball to the simulation
+			myTree.addNode(ball);
 			ball.start();//start the balls thread
 
 		}
+		
+		while (myTree.isRunning()) {//not exactly
+			myTree.checkRunning();
+		}
+		
+		message = new GLabel("CR to continue", WIDTH-100,HEIGHT-100);
+		message.setColor(Color.RED);
+		add(message);
+		addMouseListeners();
 	}
 
 	/**
@@ -63,5 +76,18 @@ public class bSim extends GraphicsProgram {
 		plane.setFilled(true);
 		plane.setColor(Color.BLACK);
 		add(plane);
+	}
+	
+	public void mousePressed(MouseEvent e) {
+		myTree.stackBalls(this);
+		message.setLabel("All Stacked");
+	}
+	
+	public double getScale() {
+		return SCALE;
+	}
+	
+	public int getHeight() {
+		return HEIGHT;
 	}
 }
