@@ -95,13 +95,16 @@ public class bTree {
 	 */
 
 	private void traverse_inorder_isRunning(bNode root) {// not working
-		running = false;
 
 		if (root.left != null)
 			traverse_inorder_isRunning(root.left);
 
-		if (root.iBall.isRunning())
+		if (root.iBall.isRunning()) {
 			running = true;
+		}else {
+			running=false;
+		}
+			
 
 		if (root.right != null)
 			traverse_inorder_isRunning(root.right);
@@ -120,15 +123,14 @@ public class bTree {
 			
 			xPos += gUtil.meterToPixels(link.getScale(), lastSize * 2);
 			yPos = link.getHeight() - gUtil.meterToPixels(link.getScale(), root.iBall.getBSize() * 2);
-			root.iBall.moveTo(xPos, yPos);
 
 		} else {
 
 			yPos -= gUtil.meterToPixels(link.getScale(), root.iBall.getBSize() * 2);
-			root.iBall.moveTo(xPos, yPos);
 
 		}
-
+		
+		root.iBall.moveTo(xPos, yPos);
 		lastSize = root.iBall.getBSize();
 
 		if (root.right != null)
