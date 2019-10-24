@@ -101,10 +101,9 @@ public class bTree {
 
 		if (root.iBall.isRunning()) {
 			running = true;
-		}else {
-			running=false;
+		} else {
+			running = false;
 		}
-			
 
 		if (root.right != null)
 			traverse_inorder_isRunning(root.right);
@@ -114,13 +113,13 @@ public class bTree {
 		traverse_inorder_stack(root, link);
 	}
 
-	private void traverse_inorder_stack(bNode root, bSim link) {//not working
-		
+	private void traverse_inorder_stack(bNode root, bSim link) {// not working
+
 		if (root.left != null)
 			traverse_inorder_stack(root.left, link);
 
 		if (root.iBall.getBSize() - lastSize > DELTASIZE) {
-			
+
 			xPos += gUtil.meterToPixels(link.getScale(), lastSize * 2);
 			yPos = link.getHeight() - gUtil.meterToPixels(link.getScale(), root.iBall.getBSize() * 2);
 
@@ -129,7 +128,7 @@ public class bTree {
 			yPos -= gUtil.meterToPixels(link.getScale(), root.iBall.getBSize() * 2);
 
 		}
-		
+
 		root.iBall.moveTo(xPos, yPos);
 		lastSize = root.iBall.getBSize();
 
