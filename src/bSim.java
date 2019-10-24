@@ -42,7 +42,7 @@ public class bSim extends GraphicsProgram {
 		
 		for (int i = 0; i < NUMBALLS; i++) {
 
-			double bSize = (int) rgen.nextDouble(MINSIZE, MAXSIZE); //randomly generate ball size element of [MINSIZE,MAXSIZE]
+			double bSize = rgen.nextDouble(MINSIZE, MAXSIZE); //randomly generate ball size element of [MINSIZE,MAXSIZE]
 			Color bColor = rgen.nextColor();//randomly generate color
 			double bLoss = rgen.nextDouble(EMIN, EMAX);//randomly generate energy loss element of [EMIN,EMAX]
 			double Vo = rgen.nextDouble(VoMIN, VoMAX); //randomly generate initial velocity element of [VoMIN,VoMAX]
