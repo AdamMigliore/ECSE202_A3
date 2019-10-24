@@ -94,7 +94,7 @@ public class bTree {
 	 * (LEFT-Root-RIGHT) and checks if that node is currently running a simulation
 	 */
 
-	private void traverse_inorder_isRunning(bNode root) {
+	private void traverse_inorder_isRunning(bNode root) {// not working
 		running = false;
 
 		if (root.left != null)
@@ -111,12 +111,13 @@ public class bTree {
 		traverse_inorder_stack(root, link);
 	}
 
-	private void traverse_inorder_stack(bNode root, bSim link) {
+	private void traverse_inorder_stack(bNode root, bSim link) {//not working
+		
 		if (root.left != null)
 			traverse_inorder_stack(root.left, link);
 
 		if (root.iBall.getBSize() - lastSize > DELTASIZE) {
-
+			
 			xPos += gUtil.meterToPixels(link.getScale(), lastSize * 2);
 			yPos = link.getHeight() - gUtil.meterToPixels(link.getScale(), root.iBall.getBSize() * 2);
 			root.iBall.moveTo(xPos, yPos);
@@ -135,7 +136,7 @@ public class bTree {
 	}
 
 	/**
-	 * @return running : if the complete simulation is currently running
+	 * @return boolean running : if the complete simulation is currently running
 	 */
 	public boolean isRunning() {
 		return running;
