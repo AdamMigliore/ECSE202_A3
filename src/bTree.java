@@ -2,20 +2,20 @@
 /**
  * Implements a B-Tree class using a NON-RECURSIVE algorithm.
  * 
- * @author ferrie
+ * @author ferrie with modifications by @author adamd
  *
  */
 
 public class bTree {
 
-	private static final double DELTASIZE = 0.1;
+	private static final double DELTASIZE = 0.1;//size difference between balls
 
 	// Instance variables
 
 	private bNode root = null;
-	private boolean running = true;
-	private double lastSize = 0;
-	private double xPos = 0, yPos = 0;
+	private boolean running = true;//true if the simulation is currently running
+	private double lastSize = 0;//last balls size
+	private double xPos = 0, yPos = 0;//ypos and xpos to place the balls
 
 	/**
 	 * addNode method - adds a new node by descending to the leaf node using a while
@@ -86,7 +86,7 @@ public class bTree {
 	 */
 
 	public void checkRunning() { // hides recursion from user
-		traverse_inorder_isRunning(root);
+		running = traverse_inorder_isRunning(root);
 	}
 
 	/**
@@ -94,26 +94,38 @@ public class bTree {
 	 * (LEFT-Root-RIGHT) and checks if that node is currently running a simulation
 	 */
 
-	private void traverse_inorder_isRunning(bNode root) {// not working
-
-		if (root.left != null)
-			traverse_inorder_isRunning(root.left);
+	private boolean traverse_inorder_isRunning(bNode root) {
 
 		if (root.iBall.isRunning()) {
-			running = true;
-		} else {
-			running = false;
+			return true;
 		}
 
-		if (root.right != null)
-			traverse_inorder_isRunning(root.right);
+		if (root.left != null) {
+			if (traverse_inorder_isRunning(root.left))
+				return true;
+		}
+
+		if (root.right != null) {
+			if (traverse_inorder_isRunning(root.right))
+				return true;
+		}
+		
+		return false;
 	}
 
+	/**
+	 * @param link : link to the simulation program
+	 */
 	public void stackBalls(bSim link) {
 		traverse_inorder_stack(root, link);
 	}
 
-	private void traverse_inorder_stack(bNode root, bSim link) {// not working
+	/**
+	 * Stack the balls in order of smallest to biggest 
+	 * @param root : our root node to check
+	 * @param link : link to the simulation program
+	 */
+	private void traverse_inorder_stack(bNode root, bSim link) {
 
 		if (root.left != null)
 			traverse_inorder_stack(root.left, link);
@@ -148,7 +160,7 @@ public class bTree {
  * A simple bNode class for use by bTree. The "payload" can be modified
  * accordingly to support any object type.
  * 
- * @author ferrie
+ * @author ferrie modified by @author adamd
  *
  */
 
